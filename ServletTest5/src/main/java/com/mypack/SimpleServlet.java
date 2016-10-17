@@ -13,13 +13,16 @@ import java.io.IOException;
  */
 public class SimpleServlet extends HttpServlet {
 
-    private String getResponseTemplate = "<html>\n" +
+    private static final String RESPONSE_TEMPLATE = "<html>\n" +
         "<body>\n" +
         "<b>Hello, {username}!</b>\n" +
         " {0} requests accepted.\n" +
         "</body>\n" +
         "</html>";
+
+    private final Object requestsCountMonitor = new Object();
     private int requestsCount = 0;
+
 
     @Override
     public void init() throws ServletException {
@@ -28,23 +31,29 @@ public class SimpleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("name");
+        int localRequestsCount = 0;
 
-        if (username == null)
-        {
+        if (username == null) {
             username = "Anonymous";
         }
 
-        requestsCount++;
+        synchronized (requestsCountMonitor) {
+            requestsCount++;
+            localRequestsCount = requestsCount;
+        }
+
         response.setStatus(200);
 
         response.getWriter().write(
-                getResponseTemplate
+                RESPONSE_TEMPLATE
                         .replace("{username}",username)
-                        .replace("{0}", String.valueOf(requestsCount)));
+                        .replace("{0}", String.valueOf(localRequestsCount)));
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        requestsCount++;
+        synchronized (requestsCountMonitor) {
+            requestsCount++;
+        }
     }
 }
