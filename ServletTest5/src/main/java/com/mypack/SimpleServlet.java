@@ -6,11 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-
-/**
- * Created by oleg on 14.10.16.
- */
 public class SimpleServlet extends HttpServlet {
 
     private static final String RESPONSE_TEMPLATE = "<html>\n" +
