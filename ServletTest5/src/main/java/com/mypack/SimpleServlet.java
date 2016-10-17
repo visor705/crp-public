@@ -20,7 +20,7 @@ public class SimpleServlet extends HttpServlet {
         "</body>\n" +
         "</html>";
 
-    private final Object requestsCountMonitor = new Object();
+    private final Object REQUESTS_COUNT_MONITOR = new Object();
     private int requestsCount = 0;
 
 
@@ -37,7 +37,7 @@ public class SimpleServlet extends HttpServlet {
             username = "Anonymous";
         }
 
-        synchronized (requestsCountMonitor) {
+        synchronized (REQUESTS_COUNT_MONITOR) {
             requestsCount++;
             localRequestsCount = requestsCount;
         }
@@ -52,7 +52,7 @@ public class SimpleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        synchronized (requestsCountMonitor) {
+        synchronized (REQUESTS_COUNT_MONITOR) {
             requestsCount++;
         }
     }
