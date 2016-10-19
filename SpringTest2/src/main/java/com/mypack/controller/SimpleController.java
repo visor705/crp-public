@@ -21,9 +21,9 @@ public class SimpleController {
     public String displayRequestsCount(
             @RequestParam(value="name", defaultValue="Anonymous") String username,
             Model model) {
-        requestsCounter.getRequestsCount().increment();
+        requestsCounter.increment();
 
-        long localRequestsCount = requestsCounter.getRequestsCount().longValue();
+        long localRequestsCount = requestsCounter.getValue();
 
         model.addAttribute("username", username);
         model.addAttribute("requestsCount", localRequestsCount);
@@ -33,7 +33,7 @@ public class SimpleController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String incrementRequestsCount() {
-        requestsCounter.getRequestsCount().increment();
+        requestsCounter.increment();
 
         return "post";
     }

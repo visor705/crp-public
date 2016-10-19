@@ -20,7 +20,7 @@ public class RootController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String incrementRequestsCount() {
-        requestsCounter.getRequestsCount().increment();
+        requestsCounter.increment();
 
         return "post";
     }

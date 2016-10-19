@@ -8,7 +8,11 @@ import java.util.concurrent.atomic.LongAdder;
 public class RequestsCounter {
     private LongAdder requestsCount = new LongAdder();
 
-    public LongAdder getRequestsCount() {
-        return requestsCount;
+    public long getValue() {
+        return requestsCount.longValue();
+    }
+
+    public void increment() {
+        requestsCount.increment();
     }
 }
