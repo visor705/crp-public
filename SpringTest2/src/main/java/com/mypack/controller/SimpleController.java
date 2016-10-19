@@ -1,5 +1,7 @@
 package com.mypack.controller;
 
+import com.mypack.model.RequestsCounter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,17 +12,18 @@ import java.util.concurrent.atomic.LongAdder;
 
 @Controller
 @RequestMapping("/simple")
-public class MainController {
+public class SimpleController {
 
-    private LongAdder requestsCount = new LongAdder();
+    @Autowired
+    private RequestsCounter requestsCounter;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String printMain(
+    public String displayRequestsCount(
             @RequestParam(value="name", defaultValue="Anonymous") String username,
             Model model) {
-        requestsCount.increment();
+        requestsCounter.getRequestsCount().increment();
 
-        long localRequestsCount = requestsCount.longValue();
+        long localRequestsCount = requestsCounter.getRequestsCount().longValue();
 
         model.addAttribute("username", username);
         model.addAttribute("requestsCount", localRequestsCount);
@@ -29,8 +32,8 @@ public class MainController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doPost() {
-        requestsCount.increment();
+    public String incrementRequestsCount() {
+        requestsCounter.getRequestsCount().increment();
 
         return "post";
     }
