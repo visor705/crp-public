@@ -27,9 +27,15 @@ public class SimpleController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public RequestStatus incrementRequestsCount() {
+    public ExtendedResponse incrementRequestsCount(@RequestBody String name) {
         requestsCounter.increment();
 
-        return  new RequestStatus("POST_OK");
+        long localRequestsCount = requestsCounter.getValue();
+
+        if (name.isEmpty()) {
+            name = "Anonymous";
+        }
+
+        return new ExtendedResponse(new RequestStatus("POST_OK"), name, localRequestsCount);
     }
 }
