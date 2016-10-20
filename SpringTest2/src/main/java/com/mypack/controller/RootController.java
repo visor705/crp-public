@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -16,10 +17,8 @@ public class RootController {
     private RequestsCounter requestsCounter;
 
     @RequestMapping(method = RequestMethod.GET)
-    public RequestStatus redirectToSimple() {
-        //TODO:redirect?
-        return new RequestStatus("Redirect failed");
-        //return "redirect:/simple";
+    public RedirectView redirectToSimple() {
+        return new RedirectView("/simple");
     }
 
     @RequestMapping(method = RequestMethod.POST)
