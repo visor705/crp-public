@@ -4,13 +4,12 @@ import com.mypack.model.RequestStatus;
 import com.mypack.model.RequestsCounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RootController {
 
     @Autowired
@@ -20,9 +19,10 @@ public class RootController {
     public RequestStatus redirectToSimple() {
         //TODO:redirect?
         return new RequestStatus("Redirect failed");
+        //return "redirect:/simple";
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST)
     public RequestStatus incrementRequestsCount() {
         requestsCounter.increment();
 

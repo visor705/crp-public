@@ -1,15 +1,11 @@
 package com.mypack.controller;
 
+import com.mypack.model.ExtendedResponse;
 import com.mypack.model.RequestStatus;
 import com.mypack.model.RequestsCounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.LongAdder;
 
@@ -21,19 +17,13 @@ public class SimpleController {
     private RequestsCounter requestsCounter;
 
     @RequestMapping(method = RequestMethod.GET)
-    public RequestStatus displayRequestsCount(
-            @RequestParam(value="name", defaultValue="Anonymous") String username,
-            Model model) {
+    public ExtendedResponse displayRequestsCount(
+            @RequestParam(value="name", defaultValue="Anonymous") String name) {
         requestsCounter.increment();
 
         long localRequestsCount = requestsCounter.getValue();
 
-        //TODO:use REST request/response body
-
-        model.addAttribute("username", username);
-        model.addAttribute("requestsCount", localRequestsCount);
-
-        return new RequestStatus("GET_OK");
+        return new ExtendedResponse(new RequestStatus("GET_OK"), name, localRequestsCount);
     }
 
     @RequestMapping(method = RequestMethod.POST)
