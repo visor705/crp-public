@@ -6,6 +6,7 @@ public class RequestStatus {
     public RequestStatus(String status) {
         this.status = status;
     }
+
     public String getStatus() {
         return status;
     }

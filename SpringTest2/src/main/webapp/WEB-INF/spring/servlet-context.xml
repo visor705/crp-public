@@ -10,10 +10,22 @@
 
     <context:component-scan base-package="com.mypack.controller" />
 
-    <!-- Jackson Mapper -->
-    <!--<bean id="jacksonMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />-->
+    <bean id="contentNegotiationManager"  class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="true" />
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="application/json" />
+
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+    </bean>
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+        <property name="order" value="1" />
         <property name="defaultViews">
             <list>
                 <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
@@ -21,5 +33,9 @@
         </property>
     </bean>
 
+     <!--If no extension matched, use JSP view -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="2" />
+    </bean>
 
 </beans>

@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.atomic.LongAdder;
-
 @RestController
 @RequestMapping(value = "/simple", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SimpleController {
@@ -18,7 +16,7 @@ public class SimpleController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ExtendedResponse displayRequestsCount(
-            @RequestParam(value="name", defaultValue="Anonymous") String name) {
+            @RequestParam(value = "name", defaultValue = "Anonymous") String name) {
         requestsCounter.increment();
 
         long localRequestsCount = requestsCounter.getValue();

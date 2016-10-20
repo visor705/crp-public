@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+         xsi:schemaLocation="http://www.springframework.org/schema/security
+			http://www.springframework.org/schema/security/spring-security-4.0.xsd
+			http://www.springframework.org/schema/beans
+		 	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <http use-expressions="true">
+        <intercept-url pattern='/secured/*' access='isAuthenticated()' /> <!--'permitAll' 'isAuthenticated()'-->
+        <form-login login-processing-url="/j_spring_security_check"
+                login-page="/login.jsp" authentication-failure-url="/login.jsp?error"
+                    default-target-url="/secured/simple"
+                    username-parameter="username" password-parameter="password"/>
+        <logout logout-url="/logout" logout-success-url="/login.jsp?logout"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="user" password="user" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+</b:beans>
