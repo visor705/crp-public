@@ -1,6 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
 <title>Login Page</title>
@@ -12,14 +11,14 @@
 	<div id="login-box">
 
 		<h3>Login with Username and Password</h3>
-<!--
-		<c:if test="${2 > 0}">
-			<h1>Invalid username/password.</h1>
+
+		<c:if test="${param.error != null}">
+			<p style="color:#ff0000">Invalid username/password.</p>
 		</c:if>
 		<c:if test="${param.logout != null}">
-			<c:out value="${param.logout}" /><h3>Logged out.</h3>
+			<p>Logged out.</p>
 		</c:if>
--->
+
 		<form name='loginForm'
 		  action="<c:url value='j_spring_security_check' />" method='POST'>
 
